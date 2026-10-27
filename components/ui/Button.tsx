@@ -21,7 +21,7 @@ export function buttonClass(variant: ButtonVariant = "pink", extra = "") {
   return [
     "group relative inline-flex min-h-12 select-none items-center justify-center gap-2.5 rounded-full border-[3px] border-ink px-6 py-2.5",
     "font-display text-[1.02rem] font-semibold leading-none tracking-[0.005em]",
-    "shadow-[var(--shadow-sticker)] transition-[transform,box-shadow,background-color] duration-200 ease-[var(--ease-out)]",
+    "shadow-[var(--shadow-sticker)] transition-[translate,box-shadow,background-color] duration-200 ease-[var(--ease-out)]",
     "hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_7px_0_0_var(--color-ink)]",
     "active:translate-x-[3px] active:translate-y-[4px] active:shadow-[0_0_0_0_var(--color-ink)]",
     variants[variant],

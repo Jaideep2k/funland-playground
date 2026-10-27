@@ -32,16 +32,20 @@ export function Marquee({
         { xPercent: reverse ? -50 : 0 },
         { xPercent: reverse ? 0 : -50, duration: speed, ease: "none", repeat: -1 },
       );
-      let settle: gsap.core.Tween | undefined;
+      // Scrolling nudges the ribbon faster (and backwards when scrolling up), then it eases back to cruising.
+      let settle: gsap.core.Timeline | undefined;
       const st = ScrollTrigger.create({
         trigger: el,
         start: "top bottom",
         end: "bottom top",
         onUpdate: (self) => {
-          const v = gsap.utils.clamp(-6, 6, self.getVelocity() / 250);
+          const dir = self.direction < 0 ? -1 : 1;
+          const boost = 1 + Math.min(3, Math.abs(self.getVelocity()) / 900);
           settle?.kill();
-          loop.timeScale(v === 0 ? 1 : v);
-          settle = gsap.to(loop, { timeScale: self.direction < 0 ? -1 : 1, duration: 0.9, ease: "power2.out" });
+          settle = gsap
+            .timeline()
+            .to(loop, { timeScale: dir * boost, duration: 0.35, ease: "power2.out" })
+            .to(loop, { timeScale: dir, duration: 1.4, ease: "power2.inOut" });
         },
       });
       return () => {

@@ -149,18 +149,22 @@ export function Header() {
           <div className="relative flex h-[4.5rem] items-center justify-between gap-4 px-[min(1rem,calc(var(--gutter)-0.5rem))]">
             <div
               aria-hidden
-              className={`absolute inset-0 rounded-full border-[3px] border-ink bg-cloud/90 shadow-[var(--shadow-sticker)] backdrop-blur-xl transition-[opacity,transform] duration-500 ease-[var(--ease-out)] ${
+              className={`absolute inset-0 rounded-full border-[3px] border-ink bg-cloud/90 shadow-[var(--shadow-sticker)] backdrop-blur-xl transition-[opacity,scale] duration-500 ease-[var(--ease-out)] ${
                 scrolled ? "scale-100 opacity-100" : "scale-[0.98] opacity-0"
               }`}
             />
             <TransitionLink
               href="/"
               aria-label="Funland Indoor Playground home"
-              className={`relative z-10 -my-2 block shrink-0 transition-[width] duration-500 ease-[var(--ease-out)] ${
-                scrolled ? "w-[104px]" : "w-[118px] md:w-[150px] xl:w-[128px] 2xl:w-[150px]"
-              }`}
+              className="relative z-10 -my-2 block w-[118px] shrink-0 md:w-[150px] xl:w-[128px] 2xl:w-[150px]"
             >
-              <Logo priority sizes="160px" className="w-full drop-shadow-[0_6px_10px_rgba(31,30,90,0.12)]" />
+              <span
+                className={`block origin-left transition-[scale] duration-500 ease-[var(--ease-out)] ${
+                  scrolled ? "scale-[0.88] md:scale-[0.7] xl:scale-[0.82] 2xl:scale-[0.7]" : "scale-100"
+                }`}
+              >
+                <Logo priority sizes="160px" className="w-full drop-shadow-[0_6px_10px_rgba(31,30,90,0.12)]" />
+              </span>
             </TransitionLink>
 
             <nav aria-label="Primary" className="relative z-10 hidden items-center xl:flex">
@@ -336,8 +340,8 @@ function Underline({ active, color }: { active: boolean; color: string }) {
   return (
     <span
       aria-hidden
-      className={`absolute inset-x-2 -bottom-0.5 h-[5px] origin-left rounded-full border-[1.5px] border-ink transition-transform duration-500 ease-[var(--ease-bounce)] ${color} ${
-        active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+      className={`absolute inset-x-2 bottom-0 h-1 origin-center rounded-full transition-[scale,opacity] duration-300 ease-[var(--ease-out)] ${color} ${
+        active ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100 group-focus-visible:scale-x-100 group-focus-visible:opacity-100"
       }`}
     />
   );

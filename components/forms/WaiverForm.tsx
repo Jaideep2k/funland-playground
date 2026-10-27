@@ -119,7 +119,7 @@ export function WaiverForm() {
               role="radio"
               aria-checked={count === n}
               onClick={() => setKidCount(n)}
-              className={`grid size-12 place-items-center rounded-2xl border-[3px] border-ink font-display text-2xl transition-[transform,box-shadow,background-color] duration-200 sm:size-14 ${
+              className={`grid size-12 place-items-center rounded-2xl border-[3px] border-ink font-display text-2xl transition-[translate,box-shadow,background-color] duration-200 sm:size-14 ${
                 count === n ? "-translate-y-0.5 bg-pink text-white shadow-[var(--shadow-sticker)]" : "bg-cloud hover:bg-sun"
               }`}
             >

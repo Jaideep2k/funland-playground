@@ -8,7 +8,8 @@ import { Logo } from "@/components/layout/Logo";
 import { OpenToday } from "@/components/layout/OpenToday";
 import { ButtonLink } from "@/components/ui/Button";
 import { PenIcon, PhoneIcon } from "@/components/ui/Icons";
-import { Dot, Ring, Sparkle, Squiggle, Star, Zigzag } from "@/components/ui/Shapes";
+import { Dot, Ring, Sparkle, Squiggle, Zigzag } from "@/components/ui/Shapes";
+import { HandTag } from "@/components/ui/HandTag";
 import { afterCurtain } from "@/components/motion/Reveal";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { hasFinePointer, intro, prefersReducedMotion } from "@/lib/motion";
@@ -46,6 +47,8 @@ export function HeroIntro() {
       const copy = q("[data-copy]") as HTMLElement[];
       const badges = q("[data-badge]") as HTMLElement[];
       const squiggle = q("[data-squiggle] path");
+      const tagMarker = q("[data-tag-marker]");
+      const tagArrow = q("[data-tag-arrow] path");
       const sun = q("[data-sunburst]");
       const introEls = q("[data-intro]");
 
@@ -80,35 +83,43 @@ export function HeroIntro() {
         tl.addLabel("impact", at)
           .fromTo(
             stickers,
-            { x: (i) => from[i].x, y: (i) => from[i].y, scale: 0.2, rotate: (i) => (i % 2 ? 25 : -25), autoAlpha: 0 },
+            { x: (i) => from[i].x, y: (i) => from[i].y, scale: 0.3, rotate: (i) => (i % 2 ? 12 : -12), autoAlpha: 0 },
             {
               x: 0,
               y: 0,
               scale: 1,
               rotate: (i) => STICKERS[i]?.r ?? 0,
               autoAlpha: 1,
-              duration: 1.2 * speed,
-              ease: "back.out(1.5)",
-              stagger: { each: 0.06, from: "center" },
+              duration: 1.3 * speed,
+              ease: "back.out(1.15)",
+              stagger: { each: 0.05, from: "center" },
             },
             "impact",
           )
           .fromTo(sun, { autoAlpha: 0, scale: 0.6 }, { autoAlpha: 1, scale: 1, duration: 1.6, ease: "expo.out" }, "impact")
           .fromTo(
             shapes,
-            { scale: 0, rotate: -90, autoAlpha: 0 },
-            { scale: 1, rotate: 0, autoAlpha: 1, duration: 0.9, ease: "back.out(2.2)", stagger: 0.05 },
+            { scale: 0, rotate: -45, autoAlpha: 0 },
+            { scale: 1, rotate: 0, autoAlpha: 1, duration: 1, ease: "back.out(1.5)", stagger: 0.05 },
             "impact+=0.15",
           )
           .fromTo(lines, { yPercent: 115, rotate: 3, autoAlpha: 1 }, { yPercent: 0, rotate: 0, duration: 1.1 * speed, ease: "expo.out", stagger: 0.1 }, "impact+=0.02")
           .fromTo(copy, { autoAlpha: 0, y: 26 }, { autoAlpha: 1, y: 0, duration: 1, ease: "expo.out", stagger: 0.08 }, "impact+=0.35")
-          .fromTo(badges, { scale: 0, rotate: -40, autoAlpha: 0 }, { scale: 1, rotate: 0, autoAlpha: 1, duration: 0.8, ease: "back.out(2.4)", stagger: 0.12 }, "impact+=0.6")
+          .fromTo(badges, { scale: 0.4, rotate: -25, autoAlpha: 0 }, { scale: 1, rotate: 0, autoAlpha: 1, duration: 0.9, ease: "back.out(1.5)", stagger: 0.12 }, "impact+=0.6")
+          .fromTo(tagMarker, { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.8, ease: "power3.inOut" }, "impact+=0.45")
+          .fromTo(tagArrow, { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.6, ease: "power2.out", stagger: 0.35 }, "impact+=0.9")
           .fromTo(squiggle, { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.9, ease: "power2.inOut" }, "impact+=0.75");
+        // The header slides its contents in, not itself: its own transform belongs to the CSS scroll behaviour.
         if (header) {
-          tl.fromTo(header, { autoAlpha: 0, y: -24 }, { autoAlpha: 1, y: 0, duration: 1, ease: "expo.out", clearProps: "transform" }, "impact+=0.4");
+          tl.set(header, { autoAlpha: 1 }, "impact+=0.4").fromTo(
+            header.children,
+            { autoAlpha: 0, y: -20 },
+            { autoAlpha: 1, y: 0, duration: 1, ease: "expo.out", stagger: 0.06, clearProps: "transform" },
+            "impact+=0.4",
+          );
         }
         if (actionBar) {
-          tl.fromTo(actionBar, { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.9, ease: "back.out(1.6)", clearProps: "transform" }, "impact+=0.7");
+          tl.fromTo(actionBar, { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 0.9, ease: "power3.out", clearProps: "transform" }, "impact+=0.7");
         }
       };
 
@@ -210,8 +221,8 @@ export function HeroIntro() {
 
       gsap
         .timeline()
-        .from(loaderLogo, { scale: 0.3, rotate: -12, autoAlpha: 0, duration: 0.9, ease: "back.out(2)" })
-        .from(win, { scale: 0.5, y: 30, autoAlpha: 0, duration: 0.7, ease: "back.out(1.8)" }, "-=0.5")
+        .from(loaderLogo, { scale: 0.6, y: 20, autoAlpha: 0, duration: 0.9, ease: "back.out(1.4)" })
+        .from(win, { scale: 0.7, y: 30, autoAlpha: 0, duration: 0.8, ease: "back.out(1.3)" }, "-=0.5")
         .from(loaderMeta, { autoAlpha: 0, y: 14, duration: 0.5, stagger: 0.08 }, "-=0.4");
 
       // Ball-pit balls bounce in turn while we wait.
@@ -369,11 +380,6 @@ export function HeroIntro() {
 
       {/* Floating shapes */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-[5]">
-        <div data-mouse="1.2" className="absolute left-[3%] top-[22%] hidden w-14 md:block">
-          <div data-intro data-shape>
-            <Star />
-          </div>
-        </div>
         <div data-mouse="0.8" className="absolute left-[44%] top-[16%] hidden w-9 lg:block">
           <div data-intro data-shape>
             <Sparkle />
@@ -404,15 +410,11 @@ export function HeroIntro() {
       <div className="wrap grid items-center gap-x-10 gap-y-20 lg:grid-cols-[1.02fr_1fr]">
         {/* Copy */}
         <div data-copy-scroll className="relative z-10">
-          <p
-            data-intro
-            data-copy
-            className="eyebrow inline-flex rounded-full border-[2.5px] border-ink bg-cloud px-4 py-1.5 text-ink shadow-[3px_3px_0_0_var(--color-ink)]"
-          >
-            <span aria-hidden className="size-2.5 rounded-full bg-pink" />
-            Indoor playground · Markham, ON
-          </p>
-          <h1 id="hero-title" className="mt-6 font-display text-hero text-ink">
+          <HandTag data-intro data-copy>
+            <span className="sm:hidden">Indoor playground in Markham</span>
+            <span className="hidden sm:inline">Indoor playground in Markham, Ontario</span>
+          </HandTag>
+          <h1 id="hero-title" className="mt-4 font-display text-hero text-ink">
             <span className="mask-line">
               <span data-intro data-line className="inline-block">
                 The best place
@@ -446,11 +448,11 @@ export function HeroIntro() {
             </ButtonLink>
           </div>
           <div data-intro data-copy className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 font-semibold text-ink-soft">
-            <OpenToday />
             <a href={business.phoneHref} className="inline-flex items-center gap-2 hover:text-pink">
               <PhoneIcon width={18} height={18} />
               {business.phone}
             </a>
+            <OpenToday />
           </div>
         </div>
 
@@ -475,8 +477,8 @@ export function HeroIntro() {
                   <defs>
                     <path id="badge-circle" d="M50 50m-36 0a36 36 0 1 1 72 0a36 36 0 1 1-72 0" />
                   </defs>
-                  <text className="fill-ink font-display text-[10.5px] font-semibold uppercase tracking-[0.2em]">
-                    <textPath href="#badge-circle">Play · Party · Explore · </textPath>
+                  <text className="fill-ink font-display text-[8.6px] font-semibold uppercase tracking-[0.1em]">
+                    <textPath href="#badge-circle">3 party rooms · Toddler area · </textPath>
                   </text>
                 </svg>
                 <span className="text-center font-display leading-none">
@@ -484,14 +486,6 @@ export function HeroIntro() {
                   <span className="block text-[clamp(1.2rem,2.4vw,1.7rem)]">1–13</span>
                 </span>
               </div>
-            </div>
-            {/* Party rooms pill */}
-            <div
-              data-intro
-              data-badge
-              className="absolute -left-3 top-[44%] z-20 hidden rounded-full border-[3px] border-ink bg-pink px-4 py-2 font-display font-semibold text-white shadow-[var(--shadow-sticker)] sm:block md:-left-8"
-            >
-              3 party rooms
             </div>
           </div>
 

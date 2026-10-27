@@ -72,7 +72,7 @@ export function Gallery({ photos }: { photos: Photo[] }) {
             key={p.src}
             type="button"
             onClick={(e) => open(i, e.currentTarget)}
-            className={`group block w-full break-inside-avoid overflow-hidden rounded-[1.3rem] border-[3px] border-ink bg-cloud p-1.5 text-left shadow-[var(--shadow-sticker)] transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:rotate-0 hover:shadow-[var(--shadow-sticker-lg)] ${tilts[i % tilts.length]}`}
+            className={`group block w-full break-inside-avoid overflow-hidden rounded-[1.3rem] border-[3px] border-ink bg-cloud p-1.5 text-left shadow-[var(--shadow-sticker)] transition-[translate,rotate,box-shadow] duration-300 hover:-translate-y-1 hover:rotate-0 hover:shadow-[var(--shadow-sticker-lg)] ${tilts[i % tilts.length]}`}
           >
             <Image
               src={p.src}

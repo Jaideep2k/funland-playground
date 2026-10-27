@@ -63,7 +63,7 @@ export function Reveal({ as: Tag = "div", children, className, stagger, y = 32, 
       gsap.set(el, { opacity: 1 });
       const from =
         effect === "pop"
-          ? { opacity: 0, y: y * 1.4, scale: 0.86, rotate: (i: number) => (i % 2 ? 4 : -4) }
+          ? { opacity: 0, y: y * 1.3, scale: 0.94, rotate: (i: number) => (i % 2 ? 1.5 : -1.5) }
           : { opacity: 0, y };
       gsap.set(targets, from);
       const tween = gsap.to(targets, {
@@ -71,12 +71,11 @@ export function Reveal({ as: Tag = "div", children, className, stagger, y = 32, 
         y: 0,
         scale: 1,
         rotate: 0,
-        duration: effect === "pop" ? 0.9 : 1.1,
-        ease: effect === "pop" ? "back.out(1.7)" : "expo.out",
+        duration: effect === "pop" ? 1 : 1.1,
+        ease: effect === "pop" ? "back.out(1.2)" : "expo.out",
         delay,
         stagger: stagger ?? 0,
         paused: true,
-        ...(effect === "pop" ? { clearProps: "transform" } : {}),
       });
       let st: ScrollTrigger | undefined;
       const cancel = afterCurtain(() => {
@@ -128,8 +127,9 @@ export function SplitHeading({ as: Tag = "h2", children, className, delay = 0, p
       let st: ScrollTrigger | undefined;
       const run = () => {
         split = SplitText.create(el, {
-          type: by === "chars" ? "words,chars" : "lines",
-          mask: by === "lines" ? "lines" : undefined,
+          // Letters rise inside their line's mask, so they never spill over other text while moving.
+          type: by === "chars" ? "lines,words,chars" : "lines",
+          mask: "lines",
           linesClass: "split-line",
           autoSplit: true,
           onSplit(self) {
@@ -137,13 +137,11 @@ export function SplitHeading({ as: Tag = "h2", children, className, delay = 0, p
             tween =
               by === "chars"
                 ? gsap.from(self.chars, {
-                    yPercent: 90,
-                    scale: 0.4,
-                    rotate: () => gsap.utils.random(-25, 25),
-                    opacity: 0,
-                    duration: 0.9,
-                    ease: "back.out(2.2)",
-                    stagger: 0.025,
+                    yPercent: 110,
+                    rotate: (i: number) => (i % 2 ? 8 : -8),
+                    duration: 1,
+                    ease: "back.out(1.3)",
+                    stagger: 0.018,
                     delay,
                     paused: !started,
                   })

@@ -23,7 +23,6 @@ export function SectionHeading({
     <div className={`${center ? "mx-auto max-w-3xl text-center" : "max-w-3xl"} ${className}`}>
       {eyebrow ? (
         <Reveal as="p" className={`eyebrow ${eyebrowColor}`} y={12}>
-          <span aria-hidden className="inline-block size-2.5 rounded-full border-2 border-ink bg-sun" />
           {eyebrow}
         </Reveal>
       ) : null}

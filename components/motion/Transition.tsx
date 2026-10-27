@@ -97,7 +97,7 @@ export function TransitionProvider({ children }: { children: React.ReactNode }) 
           },
         })
         .to(ps, { yPercent: 0, duration: 0.7, ease: "expo.inOut", stagger: 0.07 })
-        .to(el.querySelector("[data-curtain-logo]"), { scale: 1, autoAlpha: 1, duration: 0.45, ease: "back.out(2)" }, "-=0.3");
+        .to(el.querySelector("[data-curtain-logo]"), { scale: 1, autoAlpha: 1, duration: 0.5, ease: "back.out(1.4)" }, "-=0.3");
     },
     [router, lift],
   );

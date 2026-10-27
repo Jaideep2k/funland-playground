@@ -18,14 +18,13 @@ export function FooterMotion({ children }: { children: ReactNode }) {
       if (!title) return;
       let split: SplitText | undefined;
       const run = () => {
-        split = SplitText.create(title, { type: "words,chars" });
+        split = SplitText.create(title, { type: "lines,words,chars", mask: "lines" });
         gsap.from(split.chars, {
-          yPercent: 100,
-          rotate: () => gsap.utils.random(-30, 30),
-          opacity: 0,
-          duration: 0.9,
-          ease: "back.out(2.4)",
-          stagger: 0.03,
+          yPercent: 110,
+          rotate: (i: number) => (i % 2 ? 8 : -8),
+          duration: 1,
+          ease: "back.out(1.3)",
+          stagger: 0.025,
           scrollTrigger: { trigger: title, start: "top 92%", once: true },
         });
         ScrollTrigger.refresh();

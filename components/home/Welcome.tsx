@@ -50,7 +50,6 @@ export function Welcome() {
       <div className="wrap">
         <div className="mx-auto max-w-4xl text-center">
           <Reveal as="p" className="eyebrow justify-center text-pink" y={12}>
-            <span aria-hidden className="inline-block size-2.5 rounded-full border-2 border-ink bg-sun" />
             Hello, families!
           </Reveal>
           <SplitHeading id="welcome-title" className="mt-3 font-display text-headline">

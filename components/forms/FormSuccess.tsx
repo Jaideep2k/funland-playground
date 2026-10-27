@@ -16,8 +16,8 @@ export function FormSuccess({ title, children, tone = "sky" }: { title: string; 
       if (prefersReducedMotion() || !ref.current) return;
       gsap
         .timeline()
-        .from(ref.current, { scale: 0.8, rotate: -3, autoAlpha: 0, duration: 0.8, ease: "back.out(1.8)" })
-        .from("[data-success-badge]", { scale: 0, rotate: -180, duration: 0.8, ease: "back.out(2.2)" }, "-=0.5")
+        .from(ref.current, { scale: 0.92, y: 20, autoAlpha: 0, duration: 0.8, ease: "back.out(1.3)" })
+        .from("[data-success-badge]", { scale: 0.3, rotate: -90, duration: 0.8, ease: "back.out(1.6)" }, "-=0.5")
         .from("[data-success-star]", { scale: 0, duration: 0.6, ease: "back.out(3)", stagger: 0.1 }, "-=0.4");
       ref.current.focus({ preventScroll: true });
     },

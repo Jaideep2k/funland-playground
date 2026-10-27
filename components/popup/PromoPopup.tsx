@@ -99,12 +99,12 @@ export function PromoPopup() {
         .fromTo(overlay.current, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35 })
         .fromTo(
           card.current,
-          { scale: 0.6, y: 80, rotate: -6, autoAlpha: 0 },
-          { scale: 1, y: 0, rotate: 0, autoAlpha: 1, duration: 0.9, ease: "back.out(1.6)" },
+          { scale: 0.85, y: 60, rotate: -3, autoAlpha: 0 },
+          { scale: 1, y: 0, rotate: 0, autoAlpha: 1, duration: 0.9, ease: "back.out(1.3)" },
           "-=0.15",
         )
-        .from("[data-promo-pop]", { scale: 0, rotate: -20, duration: 0.6, ease: "back.out(2.5)", stagger: 0.06 }, "-=0.55")
-        .from("[data-promo-photo]", { y: 50, rotate: 0, autoAlpha: 0, duration: 0.7, ease: "back.out(1.8)", stagger: 0.08 }, "-=0.5")
+        .from("[data-promo-pop]", { scale: 0.5, rotate: -10, autoAlpha: 0, duration: 0.7, ease: "back.out(1.6)", stagger: 0.06 }, "-=0.55")
+        .from("[data-promo-photo]", { y: 40, autoAlpha: 0, duration: 0.8, ease: "back.out(1.3)", stagger: 0.08 }, "-=0.5")
         .add(() => confetti(), 0.45);
     }, overlay.current ?? undefined);
 

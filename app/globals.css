@@ -35,6 +35,7 @@
 
   --font-display: var(--font-fredoka), "Arial Rounded MT Bold", ui-rounded, system-ui, sans-serif;
   --font-sans: var(--font-nunito), ui-rounded, system-ui, sans-serif;
+  --font-hand: var(--font-caveat-brush), "Comic Sans MS", cursive;
 
   --text-label: 0.875rem;
   --text-lede: clamp(1.1rem, 0.45vw + 1rem, 1.35rem);
@@ -80,6 +81,8 @@ body {
 }
 
 html {
+  /* Reserve the scrollbar's space so hiding it (loader, popup, menu) never shifts the page sideways. */
+  scrollbar-gutter: stable;
   background: var(--color-cream);
   -webkit-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
@@ -119,15 +122,16 @@ body {
     font-variation-settings: "wdth" 122;
   }
 
+  /* Small labels are hand-lettered, like a note scribbled on a party flyer. */
   .eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 0.82rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    gap: 0.45rem;
+    font-family: var(--font-hand);
+    font-weight: 400;
+    font-size: clamp(1.3rem, 0.6vw + 1.1rem, 1.6rem);
+    line-height: 1.05;
+    letter-spacing: 0.005em;
   }
 
   /* Sticker: the logo's indigo outline around a card, with a solid offset shadow. */

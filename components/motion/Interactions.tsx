@@ -23,12 +23,12 @@ export function Interactions() {
         if (tilt) gsap.set(el, { transformPerspective: 900 });
         m = tilt
           ? {
-              x: gsap.quickTo(el, "rotationY", { duration: 0.6, ease: "power3.out" }),
-              y: gsap.quickTo(el, "rotationX", { duration: 0.6, ease: "power3.out" }),
+              x: gsap.quickTo(el, "rotationY", { duration: 0.9, ease: "power3.out" }),
+              y: gsap.quickTo(el, "rotationX", { duration: 0.9, ease: "power3.out" }),
             }
           : {
-              x: gsap.quickTo(el, "x", { duration: 0.5, ease: "power3.out" }),
-              y: gsap.quickTo(el, "y", { duration: 0.5, ease: "power3.out" }),
+              x: gsap.quickTo(el, "x", { duration: 0.7, ease: "power3.out" }),
+              y: gsap.quickTo(el, "y", { duration: 0.7, ease: "power3.out" }),
             };
         movers.set(el, m);
       }
@@ -53,11 +53,11 @@ export function Interactions() {
       const ny = (e.clientY - (r.top + r.height / 2)) / r.height;
       const m = get(target, tilt);
       if (tilt) {
-        m.x(nx * 10);
-        m.y(-ny * 10);
+        m.x(nx * 6);
+        m.y(-ny * 6);
       } else {
-        m.x(nx * 12);
-        m.y(ny * 10);
+        m.x(nx * 10);
+        m.y(ny * 8);
       }
     };
 

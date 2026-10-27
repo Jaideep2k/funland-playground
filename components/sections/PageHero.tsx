@@ -6,6 +6,7 @@ import type { Photo } from "@/content/photos";
 import type { Tone } from "@/content/parties";
 import { afterCurtain, SplitHeading } from "@/components/motion/Reveal";
 import { Dot, Sparkle, Star, Wave } from "@/components/ui/Shapes";
+import { HandTag } from "@/components/ui/HandTag";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { hasFinePointer, prefersReducedMotion } from "@/lib/motion";
 
@@ -21,6 +22,14 @@ const accent: Record<Tone, string> = {
   sun: "text-ink",
   sky: "text-sky-deep",
   ink: "text-ink",
+};
+
+/* Marker colour for the hand-lettered label, picked to stand out on each band. */
+const marker: Record<Tone, string> = {
+  pink: "var(--color-sun)",
+  sun: "var(--color-cloud)",
+  sky: "var(--color-sun)",
+  ink: "var(--color-sun)",
 };
 
 const tilts = [-5, 4, -2];
@@ -53,6 +62,8 @@ export function PageHero({
       const items = q("[data-hero-fade]");
       const pics = q("[data-hero-photo]");
       const shapes = q("[data-hero-shape]");
+      const tagMarker = q("[data-tag-marker]");
+      const tagArrow = q("[data-tag-arrow] path");
       if (prefersReducedMotion()) {
         gsap.set([...items, ...pics, ...shapes], { autoAlpha: 1 });
         return;
@@ -64,11 +75,13 @@ export function PageHero({
           .fromTo(items, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.9, ease: "expo.out", stagger: 0.08 }, 0.25)
           .fromTo(
             pics,
-            { autoAlpha: 0, scale: 0.5, y: 80, rotate: (i) => (i % 2 ? 25 : -25) },
-            { autoAlpha: 1, scale: 1, y: 0, rotate: (i) => tilts[i % tilts.length], duration: 1.1, ease: "back.out(1.5)", stagger: 0.12 },
+            { autoAlpha: 0, scale: 0.75, y: 70, rotate: (i) => (i % 2 ? 12 : -12) },
+            { autoAlpha: 1, scale: 1, y: 0, rotate: (i) => tilts[i % tilts.length], duration: 1.2, ease: "back.out(1.2)", stagger: 0.12 },
             0.1,
           )
-          .fromTo(shapes, { autoAlpha: 0, scale: 0 }, { autoAlpha: 1, scale: 1, duration: 0.8, ease: "back.out(2.4)", stagger: 0.08 }, 0.5)
+          .fromTo(shapes, { autoAlpha: 0, scale: 0.3 }, { autoAlpha: 1, scale: 1, duration: 0.9, ease: "back.out(1.5)", stagger: 0.08 }, 0.5)
+          .fromTo(tagMarker, { clipPath: "inset(0% 100% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.8, ease: "power3.inOut" }, 0.35)
+          .fromTo(tagArrow, { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.6, ease: "power2.out", stagger: 0.35 }, 0.8)
           .add(() => {
             shapes.forEach((s, i) =>
               gsap.to(s, { y: "+=14", rotate: "+=12", duration: 2.4 + i * 0.3, ease: "sine.inOut", yoyo: true, repeat: -1 }),
@@ -121,14 +134,10 @@ export function PageHero({
 
         <div className={`wrap grid items-center gap-12 ${hasPhotos ? "lg:grid-cols-[1.15fr_1fr]" : ""}`}>
           <div className={hasPhotos ? "" : "mx-auto max-w-4xl text-center"}>
-            <p
-              data-hero-fade
-              className="eyebrow inline-flex rounded-full border-[2.5px] border-ink bg-cloud px-4 py-1.5 shadow-[3px_3px_0_0_var(--color-ink)]"
-            >
-              <span aria-hidden className="size-2.5 rounded-full bg-pink" />
+            <HandTag data-hero-fade marker={marker[tone]} arrow={hasPhotos}>
               {eyebrow}
-            </p>
-            <SplitHeading as="h1" by="chars" play="load" delay={0.15} className={`mt-6 font-display text-headline ${accent[tone]}`}>
+            </HandTag>
+            <SplitHeading as="h1" by="chars" play="load" delay={0.15} className={`mt-4 font-display text-headline ${accent[tone]}`}>
               {title}
             </SplitHeading>
             {lede ? (

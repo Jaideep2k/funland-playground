@@ -56,7 +56,9 @@ export function OpenToday({ className = "", dot = true }: { className?: string; 
           {label?.open ? <span className="absolute inset-0 animate-ping rounded-full bg-[#3ee08f] opacity-60" /> : null}
         </span>
       ) : null}
-      <span>{label?.text ?? "Open 7 days a week"}</span>
+      <span className={`transition-opacity duration-500 ${label ? "opacity-100" : "opacity-0"}`}>
+        {label?.text ?? "Open 7 days a week"}
+      </span>
     </span>
   );
 }

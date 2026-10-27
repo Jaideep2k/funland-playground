@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fredoka, Nunito } from "next/font/google";
+import { Caveat_Brush, Fredoka, Nunito } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -15,6 +15,13 @@ const fredoka = Fredoka({
   axes: ["wdth"],
   display: "swap",
   variable: "--font-fredoka",
+});
+
+const caveatBrush = Caveat_Brush({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  variable: "--font-caveat-brush",
 });
 
 const nunito = Nunito({
@@ -90,7 +97,7 @@ function BusinessJsonLd() {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-CA" suppressHydrationWarning className={`${fredoka.variable} ${nunito.variable}`}>
+    <html lang="en-CA" suppressHydrationWarning className={`${fredoka.variable} ${nunito.variable} ${caveatBrush.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: preflight }} />
         <BusinessJsonLd />
