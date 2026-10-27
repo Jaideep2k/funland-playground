@@ -1,0 +1,41 @@
+"use client";
+
+import { useRef, type ReactNode } from "react";
+import { gsap, ScrollTrigger, SplitText, useGSAP } from "@/lib/gsap";
+import { prefersReducedMotion } from "@/lib/motion";
+import { useAmbient } from "@/components/motion/Reveal";
+
+/** Footer motion: the "Let the fun begin!" letters bounce up as the footer arrives. */
+export function FooterMotion({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useAmbient(ref);
+
+  useGSAP(
+    () => {
+      const el = ref.current;
+      if (!el || prefersReducedMotion()) return;
+      const title = el.querySelector<HTMLElement>("[data-footer-title]");
+      if (!title) return;
+      let split: SplitText | undefined;
+      const run = () => {
+        split = SplitText.create(title, { type: "words,chars" });
+        gsap.from(split.chars, {
+          yPercent: 100,
+          rotate: () => gsap.utils.random(-30, 30),
+          opacity: 0,
+          duration: 0.9,
+          ease: "back.out(2.4)",
+          stagger: 0.03,
+          scrollTrigger: { trigger: title, start: "top 92%", once: true },
+        });
+        ScrollTrigger.refresh();
+      };
+      if (document.fonts?.status === "loaded") run();
+      else document.fonts.ready.then(run);
+      return () => split?.revert();
+    },
+    { scope: ref },
+  );
+
+  return <div ref={ref}>{children}</div>;
+}

@@ -1,0 +1,24 @@
+# dependencies
+node_modules
+
+# next.js
+.next
+out
+next-env.d.ts
+*.tsbuildinfo
+
+# env + platform
+.env*
+!.env.example
+.vercel
+
+# os
+.DS_Store
+Thumbs.db
+
+# raw downloads from the old WordPress site (renamed copies live in public/images)
+/_source-assets/
+
+# local tooling
+/.claude/
+/.claude-recordings/
