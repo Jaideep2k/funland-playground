@@ -41,6 +41,7 @@ export function HeroIntro() {
       const q = gsap.utils.selector(el);
 
       const frame = q("[data-frame]")[0] as HTMLElement;
+      const stage = q("[data-stage]")[0] as HTMLElement;
       const stickers = q("[data-sticker]") as HTMLElement[];
       const shapes = q("[data-shape]") as HTMLElement[];
       const lines = q("[data-line]") as HTMLElement[];
@@ -181,7 +182,7 @@ export function HeroIntro() {
       });
 
       const done = () => {
-        frame.style.zIndex = "";
+        stage.style.zIndex = "";
         markSeen();
         intro.finish();
         setupAmbient();
@@ -258,9 +259,12 @@ export function HeroIntro() {
         flipImgs.forEach((img) => (img.style.opacity = "0"));
 
         // FLIP: put the real frame exactly over the loader window, then let it fly home.
+        // The whole stage (frame, badge, stickers) rises above the loader together, so the badge and
+        // stickers keep their place in front of the frame for the entire flight and nothing re-stacks
+        // when the intro hands over.
         const w = win.getBoundingClientRect();
         const f = frame.getBoundingClientRect();
-        frame.style.zIndex = "75";
+        stage.style.zIndex = "75";
         gsap.set(frame, {
           x: w.left + w.width / 2 - (f.left + f.width / 2),
           y: w.top + w.height / 2 - (f.top + f.height / 2),
@@ -457,7 +461,7 @@ export function HeroIntro() {
         </div>
 
         {/* Stage */}
-        <div className="relative mx-auto w-full max-w-[38rem] px-[6%] lg:max-w-none">
+        <div data-stage className="relative mx-auto w-full max-w-[38rem] px-[6%] lg:max-w-none">
           <div data-frame-scroll className="relative">
             <div data-frame data-intro className="sticker-lg relative aspect-[5/4] overflow-hidden bg-cloud">
               <Image
