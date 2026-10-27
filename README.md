@@ -11,6 +11,11 @@ npm run dev     # http://localhost:3000
 npm run build
 ```
 
+## Deploys
+
+The Vercel project `funland-playground` is connected to this repo: every push to `main` deploys to
+https://funland-playground.vercel.app, and other branches get their own preview URLs.
+
 ## Brand
 
 | | |
