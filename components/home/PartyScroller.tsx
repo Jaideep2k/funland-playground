@@ -12,8 +12,9 @@ import { prefersReducedMotion } from "@/lib/motion";
 const tilts = [-4, 3, -2, 5, -3, 2, -5, 4, -2, 3, -4, 2];
 
 /**
- * Party wall. On wide screens the section pins and the photos slide sideways as you scroll;
- * on phones it is a swipeable row.
+ * Party wall. On wide screens the row sits in a CSS sticky frame and slides sideways as you scroll
+ * (sticky, not a ScrollTrigger pin, so nothing ever jumps between normal and fixed positioning).
+ * On phones it is a swipeable row.
  */
 export function PartyScroller() {
   const root = useRef<HTMLElement>(null);
@@ -27,14 +28,19 @@ export function PartyScroller() {
         const track = el.querySelector<HTMLElement>("[data-track]")!;
         const cards = gsap.utils.toArray<HTMLElement>("[data-card]", el);
         const distance = () => track.scrollWidth - window.innerWidth + window.innerWidth * 0.08;
+        // The section is as tall as the sideways trip, so the sticky frame stays put for exactly that long.
+        const setHeight = () => {
+          el.style.height = `${window.innerHeight + distance()}px`;
+        };
+        setHeight();
+        ScrollTrigger.addEventListener("refreshInit", setHeight);
         const tween = gsap.to(track, {
           x: () => -distance(),
           ease: "none",
           scrollTrigger: {
             trigger: el,
             start: "top top",
-            end: () => `+=${distance()}`,
-            pin: true,
+            end: "bottom bottom",
             scrub: 0.8,
             invalidateOnRefresh: true,
           },
@@ -52,6 +58,10 @@ export function PartyScroller() {
           );
         });
         ScrollTrigger.refresh();
+        return () => {
+          ScrollTrigger.removeEventListener("refreshInit", setHeight);
+          el.style.height = "";
+        };
       });
       return () => mm.revert();
     },
@@ -59,8 +69,8 @@ export function PartyScroller() {
   );
 
   return (
-    <section ref={root} aria-labelledby="party-title" className="relative overflow-hidden bg-pink text-white">
-      <div className="flex min-h-[100svh] flex-col justify-center py-20 lg:py-0">
+    <section ref={root} aria-labelledby="party-title" className="relative overflow-x-clip bg-pink text-white">
+      <div className="flex min-h-[100svh] flex-col justify-center overflow-x-clip py-20 lg:sticky lg:top-0 lg:h-[100svh] lg:py-0">
         <div data-track className="flex items-center gap-8 pl-[var(--gutter)] max-lg:overflow-x-auto max-lg:pb-8 max-lg:pr-[var(--gutter)] max-lg:[scroll-padding-inline:var(--gutter)] max-lg:[scroll-snap-type:x_mandatory] lg:w-max lg:gap-12">
           <div className="w-[min(84vw,30rem)] shrink-0 max-lg:[scroll-snap-align:start]">
             <Reveal as="p" className="eyebrow text-sun" y={12}>
