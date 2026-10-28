@@ -8,9 +8,10 @@ import { Logo } from "@/components/layout/Logo";
 import { OpenToday } from "@/components/layout/OpenToday";
 import { ButtonLink } from "@/components/ui/Button";
 import { PenIcon, PhoneIcon } from "@/components/ui/Icons";
-import { Dot, Ring, Sparkle, Squiggle, Zigzag } from "@/components/ui/Shapes";
+import { Sparkle, Squiggle } from "@/components/ui/Shapes";
 import { HandTag } from "@/components/ui/HandTag";
 import { afterCurtain } from "@/components/motion/Reveal";
+import { TransitionLink } from "@/components/motion/Transition";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { hasFinePointer, intro, prefersReducedMotion } from "@/lib/motion";
 
@@ -19,13 +20,11 @@ const INTRO_KEY = "funland-intro";
 const MAIN = photos.hall2;
 const FLIPS: Photo[] = [photos.ballPit, decor[15], photos.toddlerCastle, photos.interactive6, decor[3], photos.doubleSlide, decor[13], photos.interactive5];
 
-/* Sticker photos around the hero frame. Positions are % of the stage; `d` is pointer depth. */
-const STICKERS: { photo: Photo; cls: string; r: number; d: number; desktopOnly?: boolean }[] = [
-  { photo: photos.ballPit, cls: "left-[-4%] top-[-9%] w-[36%]", r: -8, d: 0.9 },
-  { photo: decor[15], cls: "right-[-3%] top-[-13%] w-[25%]", r: 7, d: 0.6 },
-  { photo: photos.toddlerCastle, cls: "right-[-7%] bottom-[2%] w-[37%]", r: 5, d: 1 },
-  { photo: photos.interactive5, cls: "left-[-9%] bottom-[-7%] w-[33%]", r: -5, d: 0.7 },
-  { photo: decor[13], cls: "left-[40%] bottom-[-17%] w-[21%]", r: 4, d: 0.5, desktopOnly: true },
+/* Sticker photos on opposite corners of the hero frame, kept to two so the main photo leads.
+   Positions are % of the stage; `d` is pointer depth. */
+const STICKERS: { photo: Photo; cls: string; r: number; d: number }[] = [
+  { photo: photos.ballPit, cls: "left-[-4%] top-[-9%] w-[33%]", r: -6, d: 0.9 },
+  { photo: photos.toddlerCastle, cls: "right-[-6%] bottom-[-6%] w-[34%]", r: 4, d: 1 },
 ];
 
 export function HeroIntro() {
@@ -382,31 +381,11 @@ export function HeroIntro() {
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-cream" />
       </div>
 
-      {/* Floating shapes */}
+      {/* One floating shape: enough sparkle without competing with the photo */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-[5]">
         <div data-mouse="0.8" className="absolute left-[44%] top-[16%] hidden w-9 lg:block">
           <div data-intro data-shape>
             <Sparkle />
-          </div>
-        </div>
-        <div data-mouse="1.5" className="absolute bottom-[12%] left-[6%] w-9 md:w-12">
-          <div data-intro data-shape>
-            <Dot />
-          </div>
-        </div>
-        <div data-mouse="0.6" className="absolute right-[4%] top-[18%] hidden w-12 md:block">
-          <div data-intro data-shape>
-            <Ring />
-          </div>
-        </div>
-        <div data-mouse="1" className="absolute bottom-[8%] right-[38%] hidden w-20 lg:block">
-          <div data-intro data-shape>
-            <Zigzag />
-          </div>
-        </div>
-        <div data-mouse="0.9" className="absolute right-[6%] top-[60%] w-8 md:hidden">
-          <div data-intro data-shape>
-            <Sparkle fill="var(--color-sky)" />
           </div>
         </div>
       </div>
@@ -447,9 +426,6 @@ export function HeroIntro() {
             <ButtonLink href="/drop-in-play" variant="sun">
               Drop in Play
             </ButtonLink>
-            <ButtonLink href="/waiver" variant="cream" icon={<PenIcon />}>
-              Sign the Waiver
-            </ButtonLink>
           </div>
           <div data-intro data-copy className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 font-semibold text-ink-soft">
             <a href={business.phoneHref} className="inline-flex items-center gap-2 hover:text-pink">
@@ -457,6 +433,10 @@ export function HeroIntro() {
               {business.phone}
             </a>
             <OpenToday />
+            <TransitionLink href="/waiver" className="inline-flex items-center gap-2 hover:text-pink">
+              <PenIcon width={18} height={18} />
+              <span className="link-underline">Sign the waiver</span>
+            </TransitionLink>
           </div>
         </div>
 
@@ -494,7 +474,7 @@ export function HeroIntro() {
           </div>
 
           {STICKERS.map((s) => (
-            <div key={s.photo.src} data-sticker-wrap data-depth={s.d} className={`absolute z-10 ${s.cls} ${s.desktopOnly ? "hidden md:block" : ""}`}>
+            <div key={s.photo.src} data-sticker-wrap data-depth={s.d} className={`absolute z-10 ${s.cls}`}>
               <div data-mouse={s.d}>
                 <div
                   data-intro

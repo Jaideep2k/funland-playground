@@ -236,9 +236,9 @@ h3 {
   }
 }
 
-/* Sunburst behind the hero: a nod to the old header's rays and stars. */
+/* Sunburst behind the hero: a nod to the old header's rays and stars, kept faint so it reads as paper, not pattern. */
 .sunburst {
-  background: repeating-conic-gradient(from 0deg, rgb(251 203 103 / 0.24) 0deg 9deg, transparent 9deg 18deg);
+  background: repeating-conic-gradient(from 0deg, rgb(251 203 103 / 0.13) 0deg 9deg, transparent 9deg 18deg);
   mask-image: radial-gradient(closest-side, #000 20%, transparent 100%);
 }
 
@@ -295,6 +295,11 @@ html.js [data-intro] {
 
 html.js:not(.intro-seen):has(.intro-loader) {
   overflow: hidden;
+}
+
+/* The loader is fixed but lives inside the (isolated) hero, so lift the hero over the ribbon below it until the loader is gone. */
+html.js:not(.intro-seen) :has(> .intro-loader) {
+  z-index: 60;
 }
 
 html.js:not(.intro-seen) body:has(.intro-loader) #site-header,
