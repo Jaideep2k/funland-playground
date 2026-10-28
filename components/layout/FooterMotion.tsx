@@ -5,7 +5,7 @@ import { gsap, ScrollTrigger, SplitText, useGSAP } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/motion";
 import { useAmbient } from "@/components/motion/Reveal";
 
-/** Footer motion: the "Let the fun begin!" letters bounce up as the footer arrives. */
+/** Footer motion: the "Let the fun begin!" letters rise in as the footer arrives. */
 export function FooterMotion({ children }: { children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
   useAmbient(ref);
@@ -20,11 +20,10 @@ export function FooterMotion({ children }: { children: ReactNode }) {
       const run = () => {
         split = SplitText.create(title, { type: "lines,words,chars", mask: "lines" });
         gsap.from(split.chars, {
-          yPercent: 110,
-          rotate: (i: number) => (i % 2 ? 8 : -8),
-          duration: 1,
-          ease: "back.out(1.3)",
-          stagger: 0.025,
+          yPercent: 100,
+          duration: 0.8,
+          ease: "power3.out",
+          stagger: 0.02,
           scrollTrigger: { trigger: title, start: "top 92%", once: true },
         });
         ScrollTrigger.refresh();

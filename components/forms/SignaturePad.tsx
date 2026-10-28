@@ -35,7 +35,7 @@ export function SignaturePad({
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
       ctx.lineWidth = 2.6;
-      ctx.strokeStyle = "#1f1e5a";
+      ctx.strokeStyle = "#252854";
       if (snapshot) {
         const img = new Image();
         img.onload = () => ctx.drawImage(img, 0, 0, r.width, r.height);
@@ -62,7 +62,7 @@ export function SignaturePad({
     const ctx = canvas.current!.getContext("2d")!;
     ctx.beginPath();
     ctx.arc(p.x, p.y, 1.3, 0, Math.PI * 2);
-    ctx.fillStyle = "#1f1e5a";
+    ctx.fillStyle = "#252854";
     ctx.fill();
   };
 

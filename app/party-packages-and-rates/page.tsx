@@ -18,7 +18,7 @@ import { PageHero } from "@/components/sections/PageHero";
 import { SectionHeading } from "@/components/sections/SectionHeading";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { RuleList } from "@/components/sections/RuleList";
-import { PhotoMarquee } from "@/components/sections/PhotoMarquee";
+import { PhotoStrip } from "@/components/sections/PhotoStrip";
 import { Reveal } from "@/components/motion/Reveal";
 import { TransitionLink } from "@/components/motion/Transition";
 import { ButtonAnchor, ButtonLink } from "@/components/ui/Button";
@@ -73,7 +73,7 @@ export default function PartyPackagesPage() {
             <div aria-hidden className="absolute -right-4 -top-5 w-20 opacity-90">
               <Sparkle fill="var(--color-pink)" />
             </div>
-            <p className="font-display font-display-wide text-[clamp(4rem,10vw,7rem)] leading-[0.85] text-pink [text-shadow:3px_4px_0_var(--color-ink)]">
+            <p className="font-display font-display-heavy text-[clamp(4rem,10vw,7rem)] leading-[0.85] text-pink [text-shadow:3px_4px_0_var(--color-ink)]">
               +30
             </p>
             <div>
@@ -97,7 +97,7 @@ export default function PartyPackagesPage() {
           {packages.map((p) => (
             <article key={p.name} data-tilt className="sticker flex flex-col overflow-hidden bg-cloud">
               <header className={`relative border-b-[3px] border-ink px-6 pb-6 pt-5 ${head[p.tone]}`}>
-                <h3 className="font-display font-display-wide text-[2rem] uppercase tracking-wide">{p.name}</h3>
+                <h3 className="font-display font-display-heavy text-[2rem] uppercase tracking-wide">{p.name}</h3>
                 <p className="num mt-1 font-display text-[3.4rem] leading-none">${p.price}</p>
                 <p className="mt-1 text-sm font-bold opacity-80">plus taxes</p>
                 {p.name === "Extreme" ? (
@@ -196,7 +196,7 @@ export default function PartyPackagesPage() {
       <section aria-label="Party specials" className="wrap py-[clamp(4rem,8vw,7rem)]">
         <Reveal className="grid gap-6 lg:grid-cols-2" stagger={0.12} effect="pop">
           <div className="sticker-lg relative overflow-hidden bg-pink p-8 text-white md:p-10">
-            <p className="inline-block -rotate-3 rounded-2xl border-[3px] border-ink bg-sun px-5 py-2 font-display font-display-wide text-[clamp(2.4rem,6vw,3.8rem)] leading-none text-ink shadow-[var(--shadow-sticker)]">
+            <p className="inline-block -rotate-3 rounded-2xl border-[3px] border-ink bg-sun px-5 py-2 font-display font-display-heavy text-[clamp(2.4rem,6vw,3.8rem)] leading-none text-ink shadow-[var(--shadow-sticker)]">
               {weekdaySpecial.badge}
             </p>
             <p className="eyebrow mt-6 text-white/90">{weekdaySpecial.eyebrow}</p>
@@ -257,7 +257,7 @@ export default function PartyPackagesPage() {
         <RuleList items={partyRules} className="mt-10" />
       </section>
 
-      <PhotoMarquee photos={partyDecor} />
+      <PhotoStrip photos={partyDecor.slice(6)} />
 
       <CtaBand
         tone="pink"

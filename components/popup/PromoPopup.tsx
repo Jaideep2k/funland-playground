@@ -33,7 +33,7 @@ function snoozed() {
   }
 }
 
-const confettiColors = ["#e11b6e", "#ffc21f", "#22a6f2", "#ff4d93", "#1f1e5a"];
+const confettiColors = ["#c44673", "#fbcb67", "#5cb5ea", "#ec8da8", "#252854"];
 
 export function PromoPopup() {
   const pathname = usePathname();
@@ -200,7 +200,7 @@ export function PromoPopup() {
         <div className="px-5 pb-6 pt-6 text-center sm:px-8">
           <p className="flex items-end justify-center gap-2">
             <span className="mb-3 font-display text-sm font-semibold uppercase tracking-wider">Up to</span>
-            <span data-promo-pop className="font-display font-display-wide text-[clamp(4rem,16vw,5.6rem)] leading-[0.85] text-pink">
+            <span data-promo-pop className="font-display font-display-heavy text-[clamp(4rem,16vw,5.6rem)] leading-[0.85] text-pink">
               {s.decorUpTo}
             </span>
           </p>

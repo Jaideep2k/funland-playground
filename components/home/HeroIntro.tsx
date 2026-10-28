@@ -361,7 +361,7 @@ export function HeroIntro() {
           ))}
         </div>
         <div data-loader-meta className="mt-6 flex items-baseline gap-1 font-display text-ink">
-          <span data-count className="num font-display-wide text-[clamp(3rem,10vw,4.5rem)] leading-none">
+          <span data-count className="num font-display-heavy text-[clamp(3rem,10vw,4.5rem)] leading-none">
             00
           </span>
           <span className="text-2xl">%</span>

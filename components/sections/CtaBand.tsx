@@ -51,7 +51,7 @@ export function CtaBand({
               {eyebrow}
             </Reveal>
           ) : null}
-          <SplitHeading by="chars" className="mt-3 font-display font-display-wide text-headline">
+          <SplitHeading className="mt-3 font-display font-display-heavy text-headline">
             {title}
           </SplitHeading>
           {body ? (

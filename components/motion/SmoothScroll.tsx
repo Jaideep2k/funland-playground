@@ -10,7 +10,8 @@ export function SmoothScroll() {
   useEffect(() => {
     if (prefersReducedMotion()) return;
 
-    const lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1, smoothWheel: true });
+    // A little less glide than Lenis's default, so the page follows the wheel closely.
+    const lenis = new Lenis({ lerp: 0.13, wheelMultiplier: 1, smoothWheel: true });
     window.__lenis = lenis;
     lenis.on("scroll", ScrollTrigger.update);
     // The home intro locks scrolling until the hero has landed.

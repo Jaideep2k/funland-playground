@@ -7,7 +7,7 @@ import { CakeIcon, PenIcon, PhoneIcon, PinIcon } from "@/components/ui/Icons";
 /** Phones only: the four things parents look for most, always one thumb away. */
 export function ActionBar() {
   const item =
-    "flex flex-1 flex-col items-center justify-center gap-1 rounded-2xl py-2 font-display text-[0.78rem] font-semibold leading-none transition-colors active:scale-95";
+    "flex flex-1 flex-col items-center justify-center gap-1 whitespace-nowrap rounded-2xl px-1 py-2 font-display text-[0.74rem] font-semibold leading-none transition-colors active:scale-95 min-[360px]:text-[0.78rem]";
   return (
     <nav
       id="action-bar"

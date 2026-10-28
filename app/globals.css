@@ -1,41 +1,42 @@
 /* Funland · genre: playful premium (family entertainment) · macrostructure: Photographic hero + sticker bento
- * palette: modern primary triad taken from the logo — bubblegum pink · sunshine yellow · sky blue —
+ * palette: the logo's triad, softened — raspberry pink · butter yellow · sky blue —
  *          anchored by the logo's indigo outline (ink) on warm cream paper.
- * display: Fredoka (variable width) · body: Nunito
+ * display: Grandstander (hand-cut, like the logo's lettering) · body: Rethink Sans · note: Mansalva
  * motif: the logo's thick indigo outline → "sticker" cards with a solid offset shadow
- * motion: GSAP everywhere (intro loader, SplitText, ScrollTrigger, Flip), Lenis smooth scroll
+ * motion: the hero carries the show (intro loader, Flip, parallax); below it, gentle one-time reveals. Lenis smooth scroll
  */
 @import "tailwindcss";
 
 @theme {
   /* Surfaces */
-  --color-cream: #fff8ee;
-  --color-cream-deep: #fdeed6;
+  --color-cream: #fef8f0;
+  --color-cream-deep: #fbf0dd;
   --color-cloud: #ffffff;
-  --color-line: #ecdfc8;
+  --color-line: #ece0ce;
 
   /* Ink: the logo's indigo outline */
-  --color-ink: #1f1e5a;
-  --color-ink-soft: #45457a;
-  --color-ink-faint: #6a6a92;
+  --color-ink: #252854;
+  --color-ink-soft: #4d5075;
+  --color-ink-faint: #70728f;
 
-  /* Triad. Each has a `deep` for text on light and a `soft` for tinted bands. */
-  --color-pink: #e11b6e;
-  --color-pink-bright: #ff4d93;
-  --color-pink-soft: #ffe2ee;
-  --color-sun: #ffc21f;
-  --color-sun-deep: #8a5a00;
-  --color-sun-soft: #fff0c2;
-  --color-sky: #22a6f2;
-  --color-sky-deep: #0a6fb5;
-  --color-sky-soft: #dcf1ff;
+  /* Triad, at lower chroma than the logo so big blocks of it stay easy on the eye.
+   * Each has a `deep` for text on light and a `soft` for tinted bands. White on pink and ink on sun/sky pass AA. */
+  --color-pink: #c44673;
+  --color-pink-bright: #ec8da8;
+  --color-pink-soft: #fde8ef;
+  --color-sun: #fbcb67;
+  --color-sun-deep: #845922;
+  --color-sun-soft: #fff3d4;
+  --color-sky: #5cb5ea;
+  --color-sky-deep: #306c9d;
+  --color-sky-soft: #e3f3fd;
 
   --color-danger: #c4123f;
   --color-success: #138a52;
 
-  --font-display: var(--font-fredoka), "Arial Rounded MT Bold", ui-rounded, system-ui, sans-serif;
-  --font-sans: var(--font-nunito), ui-rounded, system-ui, sans-serif;
-  --font-hand: var(--font-caveat-brush), "Comic Sans MS", cursive;
+  --font-display: var(--font-grandstander), "Arial Rounded MT Bold", ui-rounded, system-ui, sans-serif;
+  --font-sans: var(--font-rethink), system-ui, sans-serif;
+  --font-hand: var(--font-mansalva), "Comic Sans MS", cursive;
 
   --text-label: 0.875rem;
   --text-lede: clamp(1.1rem, 0.45vw + 1rem, 1.35rem);
@@ -44,7 +45,9 @@
   --text-title--line-height: 1.04;
   --text-headline: clamp(2.5rem, 4.4vw + 1rem, 5.4rem);
   --text-headline--line-height: 0.98;
-  --text-hero: clamp(3.1rem, 6.2vw + 0.6rem, 7.6rem);
+  /* "The best place" is about 7em wide in Grandstander, so the hero sizes to keep each line on one row:
+   * by viewport while it is one column, by its half of the grid from lg up (see :root below). */
+  --text-hero: clamp(2.4rem, 12vw, 5.5rem);
   --text-hero--line-height: 0.92;
 
   --radius-blob: 2rem;
@@ -57,7 +60,7 @@
   /* The logo's outline, lifted into a hard sticker shadow. */
   --shadow-sticker: 4px 5px 0 0 var(--color-ink);
   --shadow-sticker-lg: 7px 9px 0 0 var(--color-ink);
-  --shadow-soft: 0 26px 60px -30px rgb(31 30 90 / 0.38), 0 8px 20px -12px rgb(31 30 90 / 0.18);
+  --shadow-soft: 0 26px 60px -30px rgb(37 40 84 / 0.38), 0 8px 20px -12px rgb(37 40 84 / 0.18);
 }
 
 :root {
@@ -66,6 +69,12 @@
   --dur-short: 220ms;
   --dur-long: 420ms;
   color-scheme: light;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --text-hero: clamp(3.75rem, 6.2vw - 0.2rem, 5.5rem);
+  }
 }
 
 @utility wrap {
@@ -92,11 +101,18 @@ html {
 body {
   min-height: 100svh;
   font-family: var(--font-sans);
-  font-weight: 500;
+  font-weight: 400;
   color: var(--color-ink);
   background: var(--color-cream);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Even out heading lines so a word like "Now!" never sits alone on the last one. */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
 }
 
 ::selection {
@@ -113,25 +129,24 @@ body {
 @layer components {
   .font-display {
     font-family: var(--font-display);
-    font-weight: 650;
-    font-variation-settings: "wdth" 108;
-    letter-spacing: -0.01em;
+    font-weight: 700;
+    letter-spacing: -0.005em;
   }
 
-  .font-display-wide {
-    font-variation-settings: "wdth" 122;
+  /* For the big numbers and one-line shouts. */
+  .font-display-heavy {
+    font-weight: 800;
   }
 
-  /* Small labels are hand-lettered, like a note scribbled on a party flyer. */
+  /* Small kicker above a heading: the display face, a size down and lighter, in the section's accent. */
   .eyebrow {
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-    font-family: var(--font-hand);
-    font-weight: 400;
-    font-size: clamp(1.3rem, 0.6vw + 1.1rem, 1.6rem);
-    line-height: 1.05;
-    letter-spacing: 0.005em;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.05rem, 0.3vw + 0.98rem, 1.2rem);
+    line-height: 1.2;
   }
 
   /* Sticker: the logo's indigo outline around a card, with a solid offset shadow. */
@@ -223,13 +238,13 @@ body {
 
 /* Sunburst behind the hero: a nod to the old header's rays and stars. */
 .sunburst {
-  background: repeating-conic-gradient(from 0deg, rgb(255 194 31 / 0.22) 0deg 9deg, transparent 9deg 18deg);
+  background: repeating-conic-gradient(from 0deg, rgb(251 203 103 / 0.24) 0deg 9deg, transparent 9deg 18deg);
   mask-image: radial-gradient(closest-side, #000 20%, transparent 100%);
 }
 
 /* Confetti dots used as section texture */
 .dots {
-  background-image: radial-gradient(rgb(31 30 90 / 0.12) 1.6px, transparent 1.7px);
+  background-image: radial-gradient(rgb(37 40 84 / 0.1) 1.6px, transparent 1.7px);
   background-size: 22px 22px;
 }
 

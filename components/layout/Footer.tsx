@@ -20,7 +20,7 @@ export function Footer() {
             <div className="flex flex-col items-start justify-between gap-8 border-b-2 border-dashed border-white/15 pb-12 lg:flex-row lg:items-end">
               <div>
                 <p className="eyebrow text-sun">Come play with us</p>
-                <p data-footer-title className="mt-3 font-display font-display-wide text-[clamp(2.8rem,8vw,7.5rem)] leading-[0.9]">
+                <p data-footer-title className="mt-3 font-display font-display-heavy text-[clamp(2.8rem,8vw,7.5rem)] leading-[0.9]">
                   Let the fun <span className="text-pink-bright">begin!</span>
                 </p>
               </div>

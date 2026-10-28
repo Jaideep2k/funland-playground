@@ -39,16 +39,17 @@ type RevealProps = {
   stagger?: number;
   y?: number;
   delay?: number;
-  /** "pop" scales children up with a little bounce, for cards and stickers. */
+  /** "pop" also grows children in from a touch smaller, for cards and stickers. */
   effect?: "rise" | "pop";
   id?: string;
 };
 
 /**
  * Scroll-into-view reveal, played once. The element starts hidden via `html.js [data-reveal]`,
- * so there is never a flash of the final state.
+ * so there is never a flash of the final state. Kept short and settle-only (no overshoot): below the hero
+ * the content should arrive, not perform.
  */
-export function Reveal({ as: Tag = "div", children, className, stagger, y = 32, delay = 0, effect = "rise", id }: RevealProps) {
+export function Reveal({ as: Tag = "div", children, className, stagger, y = 20, delay = 0, effect = "rise", id }: RevealProps) {
   const ref = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -61,25 +62,21 @@ export function Reveal({ as: Tag = "div", children, className, stagger, y = 32, 
       }
       const targets = stagger ? Array.from(el.children) : [el];
       gsap.set(el, { opacity: 1 });
-      const from =
-        effect === "pop"
-          ? { opacity: 0, y: y * 1.3, scale: 0.94, rotate: (i: number) => (i % 2 ? 1.5 : -1.5) }
-          : { opacity: 0, y };
+      const from = effect === "pop" ? { opacity: 0, y, scale: 0.97 } : { opacity: 0, y };
       gsap.set(targets, from);
       const tween = gsap.to(targets, {
         opacity: 1,
         y: 0,
         scale: 1,
-        rotate: 0,
-        duration: effect === "pop" ? 1 : 1.1,
-        ease: effect === "pop" ? "back.out(1.2)" : "expo.out",
+        duration: 0.8,
+        ease: "power2.out",
         delay,
-        stagger: stagger ?? 0,
+        stagger: stagger ? Math.min(stagger, 0.08) : 0,
         paused: true,
       });
       let st: ScrollTrigger | undefined;
       const cancel = afterCurtain(() => {
-        st = ScrollTrigger.create({ trigger: el, start: "top 90%", once: true, onEnter: () => tween.play() });
+        st = ScrollTrigger.create({ trigger: el, start: "top 92%", once: true, onEnter: () => tween.play() });
       }, 0.15);
       return () => {
         cancel();
@@ -146,10 +143,10 @@ export function SplitHeading({ as: Tag = "h2", children, className, delay = 0, p
                     paused: !started,
                   })
                 : gsap.from(self.lines, {
-                    yPercent: 115,
-                    duration: 1.1,
-                    ease: "expo.out",
-                    stagger: 0.09,
+                    yPercent: 100,
+                    duration: 0.85,
+                    ease: "power3.out",
+                    stagger: 0.07,
                     delay,
                     paused: !started,
                   });
@@ -192,7 +189,7 @@ export function SplitHeading({ as: Tag = "h2", children, className, delay = 0, p
   );
 }
 
-/** Scroll-linked image reveal inside `scope`: frames open from an inset and photos settle from a zoom. */
+/** Scroll-linked image reveal inside `scope`: frames open from a slight inset and photos settle from a light zoom. */
 export function useImageReveal(scope: React.RefObject<HTMLElement | null>, selector = "[data-img-reveal]") {
   useGSAP(
     () => {
@@ -201,17 +198,17 @@ export function useImageReveal(scope: React.RefObject<HTMLElement | null>, selec
         const img = frame.querySelector("img");
         gsap.fromTo(
           frame,
-          { clipPath: "inset(12% 10% 12% 10% round 2rem)" },
+          { clipPath: "inset(5% 4% 5% 4% round 2rem)" },
           {
             clipPath: "inset(0% 0% 0% 0% round 2rem)",
             ease: "none",
-            scrollTrigger: { trigger: frame, start: "top 95%", end: "top 45%", scrub: 0.6 },
+            scrollTrigger: { trigger: frame, start: "top 95%", end: "top 55%", scrub: 0.6 },
           },
         );
         if (img) {
           gsap.fromTo(
             img,
-            { scale: 1.2 },
+            { scale: 1.08 },
             { scale: 1, ease: "none", scrollTrigger: { trigger: frame, start: "top bottom", end: "bottom top", scrub: 0.6 } },
           );
         }

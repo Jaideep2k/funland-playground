@@ -20,7 +20,7 @@ export function WeekendSpecial() {
           <h2 className="mt-3 font-display text-title">{s.title}</h2>
           <p className="mt-6 flex items-end gap-2">
             <span className="mb-2 font-display text-sm font-semibold uppercase tracking-wider">Up to</span>
-            <span className="font-display font-display-wide text-[clamp(4rem,9vw,6rem)] leading-[0.85] text-sun [text-shadow:3px_4px_0_var(--color-ink)]">
+            <span className="font-display font-display-heavy text-[clamp(4rem,9vw,6rem)] leading-[0.85] text-sun [text-shadow:3px_4px_0_var(--color-ink)]">
               {s.decorUpTo}
             </span>
           </p>

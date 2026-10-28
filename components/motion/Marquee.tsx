@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
-import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { gsap, useGSAP } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/motion";
 
 /**
- * Endless ribbon. It speeds up and flips direction with the scroll, then eases back to cruising.
+ * Endless ribbon that drifts at a steady pace. It ignores the scroll, so it never races or flips under the reader.
  */
 export function Marquee({
   children,
@@ -27,31 +27,11 @@ export function Marquee({
       if (!el || prefersReducedMotion()) return;
       const track = el.querySelector<HTMLElement>("[data-track]");
       if (!track) return;
-      const loop = gsap.fromTo(
+      gsap.fromTo(
         track,
         { xPercent: reverse ? -50 : 0 },
         { xPercent: reverse ? 0 : -50, duration: speed, ease: "none", repeat: -1 },
       );
-      // Scrolling nudges the ribbon faster (and backwards when scrolling up), then it eases back to cruising.
-      let settle: gsap.core.Timeline | undefined;
-      const st = ScrollTrigger.create({
-        trigger: el,
-        start: "top bottom",
-        end: "bottom top",
-        onUpdate: (self) => {
-          const dir = self.direction < 0 ? -1 : 1;
-          const boost = 1 + Math.min(3, Math.abs(self.getVelocity()) / 900);
-          settle?.kill();
-          settle = gsap
-            .timeline()
-            .to(loop, { timeScale: dir * boost, duration: 0.35, ease: "power2.out" })
-            .to(loop, { timeScale: dir, duration: 1.4, ease: "power2.inOut" });
-        },
-      });
-      return () => {
-        st.kill();
-        settle?.kill();
-      };
     },
     { scope: root },
   );

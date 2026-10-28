@@ -13,7 +13,7 @@ export function Stats() {
       <Reveal className="grid grid-cols-2 gap-4 md:gap-5 lg:grid-cols-4" stagger={0.1} effect="pop">
         {stats.map((s) => (
           <div key={s.label} className={`sticker flex flex-col justify-between gap-6 p-5 md:p-7 ${s.bg}`}>
-            <p className="font-display font-display-wide text-[clamp(2.4rem,5vw,4.2rem)] leading-none">
+            <p className="font-display font-display-heavy text-[clamp(2.4rem,5vw,4.2rem)] leading-none">
               {s.value === null ? (
                 s.display
               ) : (

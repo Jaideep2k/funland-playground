@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Caveat_Brush, Fredoka, Nunito } from "next/font/google";
+import { Grandstander, Mansalva, Rethink_Sans } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -10,24 +10,23 @@ import { Interactions } from "@/components/motion/Interactions";
 import { PromoPopup } from "@/components/popup/PromoPopup";
 import { business, hours, IS_LIVE, SITE_URL } from "@/content/site";
 
-const fredoka = Fredoka({
+const grandstander = Grandstander({
   subsets: ["latin"],
-  axes: ["wdth"],
   display: "swap",
-  variable: "--font-fredoka",
+  variable: "--font-grandstander",
 });
 
-const caveatBrush = Caveat_Brush({
+const mansalva = Mansalva({
   subsets: ["latin"],
   weight: "400",
   display: "swap",
-  variable: "--font-caveat-brush",
+  variable: "--font-mansalva",
 });
 
-const nunito = Nunito({
+const rethink = Rethink_Sans({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-nunito",
+  variable: "--font-rethink",
 });
 
 const description =
@@ -55,7 +54,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#fff8ee",
+  themeColor: "#fef8f0",
   colorScheme: "light",
 };
 
@@ -97,7 +96,7 @@ function BusinessJsonLd() {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-CA" suppressHydrationWarning className={`${fredoka.variable} ${nunito.variable} ${caveatBrush.variable}`}>
+    <html lang="en-CA" suppressHydrationWarning className={`${grandstander.variable} ${rethink.variable} ${mansalva.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: preflight }} />
         <BusinessJsonLd />

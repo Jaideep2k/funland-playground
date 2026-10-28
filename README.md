@@ -21,8 +21,9 @@ https://funland-playground.vercel.app, and other branches get their own preview 
 | | |
 | --- | --- |
 | Logo | `public/images/brand/funland-logo.svg` is a vector copy lifted from the invitation-card PDF; the `.webp`/`.png` are renders of it |
-| Colours | A primary triad from the logo, bubblegum pink `#e11b6e`, sunshine `#ffc21f` and sky `#22a6f2`, on cream `#fff8ee`, with the logo's indigo outline `#1f1e5a` as the ink |
-| Type | Fredoka (headings, variable width) and Nunito (body), both from Google Fonts via `next/font` |
+| Colours | The logo's triad at a softer, lower chroma, raspberry pink `#c44673`, butter `#fbcb67` and sky `#5cb5ea`, on cream `#fef8f0`, with the logo's indigo outline `#252854` as the ink |
+| Type | Grandstander (headings and buttons), Rethink Sans (body) and Mansalva (the hand-written note in each hero), all from Google Fonts via `next/font` |
+| Motion | The home hero keeps the full show (loader, sticker burst, parallax). Below it everything reveals once, briefly, and nothing scroll-locks or drifts with the scroll |
 | Motif | The indigo outline around the logo becomes "sticker" cards and buttons with a solid offset shadow |
 
 ## Pages (old URL → new URL)

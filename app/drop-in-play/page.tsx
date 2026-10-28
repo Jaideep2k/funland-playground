@@ -101,7 +101,7 @@ export default function DropInPlayPage() {
 
           <Reveal className="mt-6 grid gap-6 md:grid-cols-2" stagger={0.1} effect="pop">
             <div className="sticker relative flex items-center gap-5 bg-sun p-6 md:p-8">
-              <p className="font-display font-display-wide text-[clamp(3rem,7vw,4.5rem)] leading-none text-pink [text-shadow:3px_3px_0_var(--color-ink)]">5=6</p>
+              <p className="font-display font-display-heavy text-[clamp(3rem,7vw,4.5rem)] leading-none text-pink [text-shadow:3px_3px_0_var(--color-ink)]">5=6</p>
               <div>
                 <p className="font-display text-xl">{playDeal}</p>
                 <p className="mt-1 font-semibold text-ink/75">({playDealNote})</p>
